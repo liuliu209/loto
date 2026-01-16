@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lô Tô Online</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+        </script>
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Lô Tô Online</h1>
+        <div class="row">
+            <div class="col-sm">
+                Time Count Down
+                <input type="number" id="timeleft" value="8" />
+                <p id="numberLeft"></p>
+                <p id="numberhas"></p>
+            </div>
+            <div class="col-sm">
+                <input type="number" id="lownumber" value="1" />
+                and
+                <input type="number" id="highnumber" value="90" />
+            </div>
+            <div class="col-sm">
+                <div id="countdown"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm">
+
+            </div>
+            <div class="col-sm">
+                <button id="getit" type="button" class="btn btn-success">Start!</button>
+            </div>
+            <div class="col-sm">
+                <button id="stopit" type="button" class="btn btn-danger" onclick="stopCountDown()">Stop!</button>
+                <button id="stopit" type="button" class="btn btn-warning" onclick="clearScreen()">Clear!</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm">
+
+        </div>
+        <div class="col-sm">
+            <p id="randomnumber"></p>
+        </div>
+        <div class="col-sm">
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm"></div>
+        <div class="col-sm">
+            <div id="result"></div>
+        </div>
+        <div class="col-sm"></div>
+    </div>
+
+   
+
+    <div style="margin-top: 10px;"></div>
+    <!-- Dò Số -->
+    <div class="row">
+        <div class="col-sm">
+            Số cần dò:
+            <input type="number" id="findNumber" oninput="checkNumber()" />
+        </div>
+        <div class="col-sm">
+            <div class="alert alert-success" role="alert" hidden>
+                <p id="textCheckNumber"></p>
+            </div>
+            <div class="alert alert-danger" role="alert" hidden>
+                <p id="textCheckNumberWrong"></p>
+            </div>
+        </div>
+        <div class="col-sm">
+            <p>Lì xì cho tác giả:</p>
+            <img src="donate.jpg" alt="" srcset="">
+        </div>
+    </div>
+
+
+    <!-- Bộ hình -->
+    <!-- <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-10">
+            <div class="card-group">
+                <div class="card border-primary mb-3">
+                  <img class="card-img-top" src="image/1.jpg" >
+                  <div class="card-footer">
+                    <small class="text-muted">Tờ số 1</small>
+                  </div>
+                </div>
+                <div class="card border-primary mb-3">
+                  <img class="card-img-top" src="image/2.jpg" >
+                  <div class="card-footer">
+                    <small class="text-muted">Tờ số 2</small>
+                  </div>
+                </div>
+                <div class="card border-primary mb-3">
+                  <img class="card-img-top" src="image/3.jpg" >
+                  <div class="card-footer">
+                    <small class="text-muted">Tờ số 3</small>
+                  </div>
+                </div>
+                <div class="card border-primary mb-3">
+                    <img class="card-img-top" src="image/4.jpg" >
+                    <div class="card-footer">
+                      <small class="text-muted">Tờ số 4</small>
+                    </div>
+                  </div>
+                  <div class="card border-primary mb-3">
+                    <img class="card-img-top" src="image/5.jpg" >
+                    <div class="card-footer">
+                      <small class="text-muted">Tờ số 5</small>
+                    </div>
+                  </div>
+                  <div class="card border-primary mb-3">
+                    <img class="card-img-top" src="image/6.jpg" >
+                    <div class="card-footer">
+                      <small class="text-muted">Tờ số 6</small>
+                    </div>
+                  </div>
+                  <div class="card border-primary mb-3">
+                    <img class="card-img-top" src="image/7.jpg" >
+                    <div class="card-footer">
+                      <small class="text-muted">Tờ số 7</small>
+                    </div>
+                  </div>
+                   <div class="card border-primary mb-3">
+                    <img class="card-img-top" src="image/8.jpg" >
+                    <div class="card-footer">
+                      <small class="text-muted">Tờ số 8</small>
+                    </div>
+                  </div>
+                   <div class="card border-primary mb-3">
+                    <img class="card-img-top" src="image/9.jpg" >
+                    <div class="card-footer">
+                      <small class="text-muted">Tờ số 9</small>
+                    </div>
+                  </div>
+                   <div class="card border-primary mb-3">
+                    <img class="card-img-top" src="image/10.jpg" >
+                    <div class="card-footer">
+                      <small class="text-muted">Tờ số 10</small>
+                    </div>
+                  </div>
+                   <div class="card border-primary mb-3">
+                    <img class="card-img-top" src="image/11.jpg" >
+                    <div class="card-footer">
+                      <small class="text-muted">Tờ số 11</small>
+                    </div>
+                  </div>
+                   <div class="card border-primary mb-3">
+                    <img class="card-img-top" src="image/12.jpg" >
+                    <div class="card-footer">
+                      <small class="text-muted">Tờ số 12</small>
+                    </div>
+                  </div>
+                   <div class="card border-primary mb-3">
+                    <img class="card-img-top" src="image/13.jpg" >
+                    <div class="card-footer">
+                      <small class="text-muted">Tờ số 13</small>
+                    </div>
+                  </div>
+                   <div class="card border-primary mb-3">
+                    <img class="card-img-top" src="image/14.jpg" >
+                    <div class="card-footer">
+                      <small class="text-muted">Tờ số 14</small>
+                    </div>
+                  </div>
+                   <div class="card border-primary mb-3">
+                    <img class="card-img-top" src="image/15.jpg" >
+                    <div class="card-footer">
+                      <small class="text-muted">Tờ số 15</small>
+                    </div>
+                  </div>
+                   <div class="card border-primary mb-3">
+                    <img class="card-img-top" src="image/16.jpg" >
+                    <div class="card-footer">
+                      <small class="text-muted">Tờ số 16</small>
+                    </div>
+                  </div>
+              </div>
+        </div>
+        <div class="col-sm-1"></div>
+    </div> -->
+
+    <div class="rowCustomize">
+        <div class="column">
+            <img src="image/1.jpg">
+            <img src="image/2.jpg">
+            <img src="image/3.jpg">
+            <img src="image/4.jpg">
+        </div>
+        <div class="column">
+            <img src="image/5.jpg">
+            <img src="image/6.jpg">
+            <img src="image/7.jpg">
+            <img src="image/8.jpg">
+        </div>
+        <div class="column">
+            <img src="image/9.jpg">
+            <img src="image/10.jpg">
+            <img src="image/11.jpg">
+            <img src="image/12.jpg">
+        </div>
+        <div class="column">
+            <img src="image/13.jpg">
+            <img src="image/14.jpg">
+            <img src="image/15.jpg">
+            <img src="image/16.jpg">
+        </div>
+    </div>
+
+</body>
+
+</html>
