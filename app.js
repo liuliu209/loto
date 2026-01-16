@@ -1,0 +1,143 @@
+var result = [];
+    var flgStop = false;
+    var numberLeft = 90;
+
+    function IsNumeric(n) {
+        return !isNaN(n);
+    }
+
+    $(function() {
+        $("#getit").click(function() {
+            // hidden start button
+            $("#getit").attr("hidden",true);
+
+            var numLow = $("#lownumber").val();
+            var numHigh = $("#highnumber").val();
+
+            var numRand = randomNum(numLow, numHigh, result);
+
+            while (inArray(numRand, result)) {
+                if (result.length == numHigh) {
+                    $("#randomnumber").text("Hết số rồi");
+                    exit;
+                }
+
+                numRand = randomNum(numLow, numHigh);
+            }
+
+            if (
+                IsNumeric(numLow) &&
+                IsNumeric(numHigh) &&
+                parseFloat(numLow) <= parseFloat(numHigh) &&
+                numLow != "" &&
+                numHigh != ""
+            ) {
+                result.push(numRand);
+                // result.sort();
+
+                // --- BẮT ĐẦU ĐOẠN CODE THAY THẾ ---
+                var msg = new SpeechSynthesisUtterance(numRand);
+                msg.lang = 'vi-VN'; // Đổi ngôn ngữ sang tiếng Việt
+                msg.rate = 1;
+
+                // Lấy danh sách giọng đọc có trong máy
+                var voices = window.speechSynthesis.getVoices();
+
+                // Tìm giọng ưu tiên (Google Vietnamese hoặc bất kỳ giọng VN nào)
+                // Code này giúp sửa lỗi trình duyệt không tự đổi giọng dù đã set lang='vi-VN'
+                var vnVoice = voices.find(function (v) { return v.lang === 'vi-VN'; });
+
+                if (vnVoice) {
+                    msg.voice = vnVoice;
+                }
+
+                window.speechSynthesis.speak(msg);
+                // --- KẾT THÚC ĐOẠN CODE THAY THẾ ---
+
+                numberLeft = numberLeft - 1;
+
+                $("#numberLeft").text("Còn lại: " + numberLeft + " số");
+                $("#numberhas").text("Số đã kêu: " + result.length + " số");
+                $("#randomnumber").text(numRand);
+                $("#result").text(result);
+            }
+
+            countDown();
+            return false;
+        });
+
+        $("input[type=text]").each(function() {
+            $(this).data("first-click", true);
+        });
+
+        $("input[type=text]").focus(function() {
+            if ($(this).data("first-click")) {
+                $(this).val("");
+                $(this).data("first-click", false);
+                $(this).css("color", "black");
+            }
+        });
+    });
+
+    function inArray(needle, haystack) {
+        var count = haystack.length;
+        for (var i = 0; i < count; i++) {
+            if (haystack[i] == needle) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function randomNum(numLow, numHigh) {
+        var adjustedHigh = parseFloat(numHigh) - parseFloat(numLow) + 1;
+        var numRand = Math.floor(Math.random() * adjustedHigh) + parseFloat(numLow);
+
+        return numRand;
+    }
+
+    function countDown() {
+        if (this.flgStop == false) {
+            var timeleft = $("#timeleft").val();
+            var downloadTimer = setInterval(function() {
+                if (timeleft <= 0 && this.flgStop == false) {
+                    clearInterval(downloadTimer);
+                    // $(#getit).click();
+                    document.getElementById("getit").click();
+                } else if (this.flgStop == true) {
+                    document.getElementById("countdown").innerHTML = "Đã có người kinh";
+                } else {
+                    document.getElementById("countdown").innerHTML = timeleft + " seconds remaining";
+                }
+                timeleft -= 1;
+            }, 1000);
+        } else {
+            document.getElementById("countdown").innerHTML = "Đã có người kinh";
+        }
+    }
+
+    function stopCountDown() {
+        this.flgStop = true;
+        $("#getit").removeAttr('hidden');
+    }
+
+    function clearScreen() {
+        location.reload();
+    }
+
+    function checkNumber() {
+        var number = $("#findNumber").val();
+        // $("#textCheckNumber").attr("hidden",true);
+        // $("#textCheckNumberWrong").attr("hidden",true);
+
+        if(inArray(number, this.result))
+        {
+            $(".alert-success").removeAttr('hidden');
+            document.getElementById("textCheckNumber").innerHTML = "Có số " + number;
+        }
+        else
+        {
+            $(".alert-danger").removeAttr('hidden');
+            document.getElementById("textCheckNumberWrong").innerHTML = "Không Có Số " + number;
+        }
+    }
